@@ -21,7 +21,7 @@ function validateInput(testInput) {
     } else {
         let convertedInput = Number(testInput)
         if (!isNaN(convertedInput)){
-        return "Is a number"
+        return "Is a Number"
         } else if (isNaN(convertedInput)){
             return "Not a Number"
         } else if (testInput == "") {
@@ -40,7 +40,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
     if (validateInput(pilot) == "Empty" || validateInput(copilot) == "Empty" || validateInput(fuelLevel) == "Empty" || validateInput(cargoLevel) == "Empty") {
         alert("Please complete all fields.");
-    } else if (validateInput(pilot) == "Is a number" || validateInput(copilot) == "Is a number" || validateInput(fuelLevel) == "Not a Number" || validateInput(cargoLevel) == "Not a Number") {
+    } else if (validateInput(pilot) == "Is a Number" || validateInput(copilot) == "Is a Number" || validateInput(fuelLevel) == "Not a Number" || validateInput(cargoLevel) == "Not a Number") {
         alert("Invalid input type");
         console.log(validateInput(pilot));
         console.log(validateInput(copilot));
@@ -48,28 +48,28 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
         console.log(validateInput(cargoLevel));
     } else {
         list.style.visibility = "visible";
-        pilotStatus.innerHTML = `Pilot ${pilot} is ready to launch`;
-        copilotStatus.innerHTML = `Copilot ${copilot} is ready to launch`;
+        pilotStatus.innerHTML = `Pilot ${pilot} is ready for launch`;
+        copilotStatus.innerHTML = `Co-pilot ${copilot} is ready for launch`;
         if (fuelStatus < 10000 && cargoStatus > 10000){
             fuelStatus.innerHTML = "Not enough fuel for launch.";
             cargoStatus.innerHTML = "Too much cargo to launch.";
             launchStatus.innerHTML = "Shuttle not ready for launch.";
             launchStatus.style.color = "red";
         } else if (fuelStatus > 10000 && cargoStatus > 10000){
-            fuelStatus.innerHTML = "Fuel level adequate for launch.";
+            fuelStatus.innerHTML = "Fuel level high enough for launch";
             cargoStatus.innerHTML = "Too much cargo to launch.";
             launchStatus.innerHTML = "Shuttle not ready for launch.";
             launchStatus.style.color = "red";
         } else if (fuelStatus < 10000 && cargoStatus < 10000){
             fuelStatus.innerHTML = "Not enough fuel for launch.";
-            cargoStatus.innerHTML = "Cargo weight low enough to launch.";
+            cargoStatus.innerHTML = "Cargo mass low enough for launch";
             launchStatus.innerHTML = "Shuttle not ready for launch.";
             launchStatus.style.color = "red";
         } else {
-            fuelStatus.innerHTML = "Fuel levels adequate for launch.";
-            cargoStatus.innerHTML = "Cargo weight low enough to launch.";
-            launchStatus.innerHTML = "Shuttle is ready for launch.";
-            launchStatus.style.color = "green";
+            fuelStatus.innerHTML = "Fuel level high enough for launch";
+            cargoStatus.innerHTML = "Cargo mass low enough for launch";
+            launchStatus.innerHTML = "Shuttle is Ready for Launch";
+            launchStatus.style.color = "rgb(65, 159, 106)";
         }
     }
 };
