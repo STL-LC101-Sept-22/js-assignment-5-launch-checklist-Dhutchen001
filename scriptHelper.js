@@ -1,40 +1,93 @@
-// Write your helper functions here!
 require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
-   // Here is the HTML formatting for our mission target div.
-   /*
+    let div = document.getElementById("missionTarget");
+    div.innerHTML=`
                 <h2>Mission Destination</h2>
                 <ol>
-                    <li>Name: </li>
-                    <li>Diameter: </li>
+                    <li>Name: ${name}</li>
+                    <li>Diameter: ${diameter}</li>
                     <li>Star: ${star}</li>
-                    <li>Distance from Earth: </li>
-                    <li>Number of Moons: </li>
+                    <li>Distance from Earth: ${distance}</li>
+                    <li>Number of Moons: ${moons}</li>
                 </ol>
-                <img src="">
-   */
-}
+                <img src="${imageUrl}">`;
+
+};
 
 function validateInput(testInput) {
-   
-}
+    if (testInput == "") {
+        return "Empty"
+    } else {
+        let convertedInput = Number(testInput)
+        if (!isNaN(convertedInput)){
+        return "Is a number"
+        } else if (isNaN(convertedInput)){
+            return "Not a Number"
+        } else if (testInput == "") {
+            return "Empty"
+        }
+    }
+};
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
-   
-}
+    let pilotStatus = document.getElementById("pilotStatus");
+    let copilotStatus = document.getElementById("copilotStatus");
+    let fuelStatus = document.getElementById("fuelStatus");
+    let cargoStatus = document.getElementById("cargoStatus");
+    let launchStatus = document.getElementById("launchStatus");
+    //let faultyItems = document.getElementByID("faultyItems");
+
+    if (validateInput(pilot) == "Empty" || validateInput(copilot) == "Empty" || validateInput(fuelLevel) == "Empty" || validateInput(cargoLevel) == "Empty") {
+        alert("Please complete all fields.");
+    } else if (validateInput(pilot) == "Is a number" || validateInput(copilot) == "Is a number" || validateInput(fuelLevel) == "Not a Number" || validateInput(cargoLevel) == "Not a Number") {
+        alert("Invalid input type");
+        console.log(validateInput(pilot));
+        console.log(validateInput(copilot));
+        console.log(validateInput(fuelLevel));
+        console.log(validateInput(cargoLevel));
+    } else {
+        list.style.visibility = "visible";
+        pilotStatus.innerHTML = `Pilot ${pilot} is ready to launch`;
+        copilotStatus.innerHTML = `Copilot ${copilot} is ready to launch`;
+        if (fuelStatus < 10000 && cargoStatus > 10000){
+            fuelStatus.innerHTML = "Not enough fuel for launch.";
+            cargoStatus.innerHTML = "Too much cargo to launch.";
+            launchStatus.innerHTML = "Shuttle not ready for launch.";
+            launchStatus.style.color = "red";
+        } else if (fuelStatus > 10000 && cargoStatus > 10000){
+            fuelStatus.innerHTML = "Fuel level adequate for launch.";
+            cargoStatus.innerHTML = "Too much cargo to launch.";
+            launchStatus.innerHTML = "Shuttle not ready for launch.";
+            launchStatus.style.color = "red";
+        } else if (fuelStatus < 10000 && cargoStatus < 10000){
+            fuelStatus.innerHTML = "Not enough fuel for launch.";
+            cargoStatus.innerHTML = "Cargo weight low enough to launch.";
+            launchStatus.innerHTML = "Shuttle not ready for launch.";
+            launchStatus.style.color = "red";
+        } else {
+            fuelStatus.innerHTML = "Fuel levels adequate for launch.";
+            cargoStatus.innerHTML = "Cargo weight low enough to launch.";
+            launchStatus.innerHTML = "Shuttle is ready for launch.";
+            launchStatus.style.color = "green";
+        }
+    }
+};
 
 async function myFetch() {
     let planetsReturned;
 
-    planetsReturned = await fetch().then( function(response) {
+    planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then( function(response) {
+            return response.json();
         });
 
     return planetsReturned;
-}
+};
 
 function pickPlanet(planets) {
-}
+    let randomIndex = Math.floor(Math.random()*6);
+    return planets[randomIndex];
+};
 
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
